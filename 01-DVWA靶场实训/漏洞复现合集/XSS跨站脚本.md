@@ -24,7 +24,7 @@
 
 **合规声明**：本文档所有 Payload 均在本地 DVWA 靶场复现，仅用于安全学习。
 
-![XSS 漏洞模块入口页面](screenshots/xss/xss-01.png)
+![XSS 漏洞模块入口页面](../../screenshots/xss/xss-01.png)
 
 ---
 
@@ -59,11 +59,11 @@ echo '<pre>Hello ' . $name . '</pre>';
 </script>
 ```
 
-> ⚠️ 真实攻击中需在攻击者服务器部署接收脚本，**本仓库不演示真实利用**。
+> 注意 真实攻击中需在攻击者服务器部署接收脚本，**本仓库不演示真实利用**。
 
 #### 关键截图
 
-![反射型 XSS Low 级别弹窗](screenshots/xss/xss-02.png)
+![反射型 XSS Low 级别弹窗](../../screenshots/xss/xss-02.png)
 
 ---
 
@@ -84,9 +84,9 @@ $name = str_replace('<script>', '', $_GET['name']);
 
 **嵌套绕过**（过滤递归不彻底）：
 ```html
-<scr<script>ipt>alert('XSS')</scr</script>ipt>
+<scr<script>ipt>alert('XSS')</scr<script>ipt>
 ```
-服务端第一次过滤后剩下 `<script>alert('XSS')</script>`。
+服务端第一次过滤 `<script>` 后，剩下 `<script>alert('XSS')</script>`，被浏览器正常解析执行。
 
 **使用其他事件标签**：
 ```html
@@ -101,7 +101,7 @@ $name = str_replace('<script>', '', $_GET['name']);
 
 #### 关键截图
 
-![反射型 XSS Medium 级别绕过](screenshots/xss/xss-04.png)
+![反射型 XSS Medium 级别绕过](../../screenshots/xss/xss-04.png)
 
 ---
 
@@ -130,7 +130,7 @@ $name = preg_replace('/<script.*?>/i', '', $_GET['name']);
 
 #### 关键截图
 
-![反射型 XSS High 级别绕过](screenshots/xss/xss-05.png)
+![反射型 XSS High 级别绕过](../../screenshots/xss/xss-05.png)
 
 ---
 
@@ -142,9 +142,9 @@ echo '<pre>Hello ' . $name . '</pre>';
 ```
 
 **安全设计要点**：
-- ✅ `htmlspecialchars()` 转义 `< > " ' &` 等 HTML 特殊字符
-- ✅ ENT_QUOTES 标志同时转义单引号和双引号
-- ✅ 显式指定 UTF-8 编码
+- ✓ `htmlspecialchars()` 转义 `< > " ' &` 等 HTML 特殊字符
+- ✓ ENT_QUOTES 标志同时转义单引号和双引号
+- ✓ 显式指定 UTF-8 编码
 
 ---
 
@@ -173,7 +173,7 @@ echo "<div class='comment'>$message</div>";
 
 #### 关键截图
 
-![存储型 XSS Low 级别触发](screenshots/xss/xss-03.png)
+![存储型 XSS Low 级别触发](../../screenshots/xss/xss-03.png)
 
 **危害**：所有访问该页面的用户都会执行恶意脚本，**影响范围远大于反射型 XSS**。
 
@@ -217,7 +217,7 @@ echo "<div class='comment'>$message</div>";
 
 #### 关键截图
 
-![存储型 XSS 防御机制对比](screenshots/xss/xss-06.png)
+![存储型 XSS 防御机制对比](../../screenshots/xss/xss-06.png)
 
 ---
 
@@ -229,9 +229,9 @@ $message = htmlspecialchars($_POST['mtxMessage'], ENT_QUOTES, 'UTF-8');
 ```
 
 **安全设计要点**：
-- ✅ 所有用户输入均 `htmlspecialchars()` 转义
-- ✅ 数据库层做字段长度限制
-- ✅ 输出时再次转义（即使数据库存储安全）
+- ✓ 所有用户输入均 `htmlspecialchars()` 转义
+- ✓ 数据库层做字段长度限制
+- ✓ 输出时再次转义（即使数据库存储安全）
 
 ---
 

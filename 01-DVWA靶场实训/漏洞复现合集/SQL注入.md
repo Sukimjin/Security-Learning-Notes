@@ -84,11 +84,11 @@ $result = mysqli_query($GLOBALS["___mysqli_ston"], $query);
 
 #### 关键截图
 
-![SQL注入报错确认注入点](screenshots/sqli/sqli-01.png)
+![SQL注入报错确认注入点](../../screenshots/sqli/sqli-01.png)
 
 > 图示：Burp Suite Repeater 显示 `id=1'` 时返回 500 错误，确认注入点。
 
-**爆破结果**：成功获取 users 表 5 个账号的明文账号与 MD5 哈希密码。
+**注入结果**：成功获取 users 表 5 个账号的明文账号与 MD5 哈希密码。
 
 ---
 
@@ -180,7 +180,7 @@ $query = "SELECT first_name, last_name FROM users WHERE user_id = $id;";
 
 #### 关键截图
 
-![High 级别时间盲注验证](screenshots/sqli/sqli-06.png)
+![High 级别时间盲注验证](../../screenshots/sqli/sqli-06.png)
 
 #### 盲注脚本思路（Python）
 
@@ -204,7 +204,7 @@ for pos in range(1, 20):
             break
 ```
 
-> ⚠️ 此脚本仅作为盲注原理演示，请在本地 DVWA 靶场使用。
+> 注意 此脚本仅作为盲注原理演示，请在本地 DVWA 靶场使用。
 
 ---
 
@@ -224,11 +224,11 @@ if (is_numeric($id)) {
 ```
 
 **安全设计要点**：
-- ✅ Anti-CSRF token
-- ✅ 严格数字校验
-- ✅ PDO 预编译参数化查询
-- ✅ LIMIT 1 限制返回
-- ✅ `is_numeric()` 强类型校验
+- ✓ Anti-CSRF token
+- ✓ 严格数字校验
+- ✓ PDO 预编译参数化查询
+- ✓ LIMIT 1 限制返回
+- ✓ `is_numeric()` 强类型校验
 
 ---
 
