@@ -130,9 +130,9 @@ python3 dirsearch.py -u http://127.0.0.1/dvwa -e php -t 50 -i 200,301
 
 #### 扫描截图
 
-![dirsearch 对 DVWA 目录爆破过程](screenshots/tools/tools-04.png)
+![dirsearch 对 DVWA 目录爆破过程](../screenshots/tools/tools-04.png)
 
-![dirsearch 扫描结果详情](screenshots/tools/tools-05.png)
+![dirsearch 扫描结果详情](../screenshots/tools/tools-05.png)
 
 通过目录爆破识别出以下敏感资产：
 
@@ -301,10 +301,10 @@ ffuf -u http://target.com/login -X POST -d "username=admin&password=FUZZ" -w pas
 
 ## 九、合法使用边界
 
-⚠️ **仅在授权目标上使用**：
-- 本地 DVWA 靶场 ✅
-- 客户书面授权的渗透测试 ✅
-- 未授权系统 ❌（可能违反《网络安全法》）
+注意 **仅在授权目标上使用**：
+- 本地 DVWA 靶场 ✓
+- 客户书面授权的渗透测试 ✓
+- 未授权系统 ✗（可能违反《网络安全法》）
 
 ### 9.1 速率控制
 

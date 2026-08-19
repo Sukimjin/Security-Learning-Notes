@@ -25,7 +25,18 @@ chmod +x xray_linux_amd64
 sudo mv xray_linux_amd64 /usr/local/bin/xray
 ```
 
-### 2.2 生成证书（被动代理需要）
+### 2.2 Windows 安装
+
+```powershell
+# 下载 Windows 版
+Invoke-WebRequest -Uri "https://github.com/chaitin/xray/releases/download/1.9.11/xray_windows_amd64.exe.zip" -OutFile "xray.zip"
+Expand-Archive xray.zip
+.\xray_windows_amd64.exe version
+```
+
+> Windows 版无需 chmod，直接在 PowerShell 或 CMD 中运行即可。
+
+### 2.3 生成证书（被动代理需要）
 
 ```bash
 xray genca
@@ -159,9 +170,9 @@ xray webscan --plugins sqli --url ... --json-output /tmp/scan.json
 
 #### Xray 扫描截图
 
-![Xray 代理模式启动与监听](screenshots/tools/tools-06.png)
+![Xray 代理模式启动与监听](../screenshots/tools/tools-06.png)
 
-![Xray 漏洞扫描报告](screenshots/tools/tools-07.png)
+![Xray 漏洞扫描报告](../screenshots/tools/tools-07.png)
 
 | 经验 | 说明 |
 |------|------|
@@ -256,10 +267,10 @@ xray webscan --poc ./pocs/ --url http://target.com
 
 ### 8.1 合法使用边界
 
-⚠️ **仅在授权目标上使用**：
-- 本地 DVWA 靶场 ✅
-- 客户书面授权的目标 ✅
-- 未授权系统 ❌（可能违反《网络安全法》）
+注意 **仅在授权目标上使用**：
+- 本地 DVWA 靶场 ✓
+- 客户书面授权的目标 ✓
+- 未授权系统 ✗（可能违反《网络安全法》）
 
 ### 8.2 速率控制
 

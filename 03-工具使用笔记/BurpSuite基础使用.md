@@ -13,14 +13,14 @@ Burp Suite 是 Web 应用安全测试的事实标准工具，由 PortSwigger 公
 
 | 模块 | Community | Professional |
 |---|---|---|
-| Proxy | ✅ | ✅ |
-| Repeater | ✅ | ✅ |
-| Decoder | ✅ | ✅ |
-| Comparer | ✅ | ✅ |
-| Intruder | ✅（限速） | ✅ |
-| Scanner | ❌ | ✅ |
-| Crawler | ❌ | ✅ |
-| Extensions | 部分 | ✅ |
+| Proxy | ✓ | ✓ |
+| Repeater | ✓ | ✓ |
+| Decoder | ✓ | ✓ |
+| Comparer | ✓ | ✓ |
+| Intruder | ✓（限速） | ✓ |
+| Scanner | ✗ | ✓ |
+| Crawler | ✗ | ✓ |
+| Extensions | 部分 | ✓ |
 
 > 本笔记以 **Community 版** 为基础，专业版增加功能仅作说明。
 
@@ -38,7 +38,7 @@ java -jar burpsuite_community.jar
 # 127.0.0.1:8080
 ```
 
-### 2.2 CA 证书导入（HTTPS 抓包必做��
+### 2.2 CA 证书导入（HTTPS 抓包必做）
 
 ```
 1. 浏览器访问 http://burp
@@ -88,7 +88,7 @@ Proxy → Options → Intercept Client Requests
 
 ### 3.3 DVWA 实战示例
 
-**SQL 注入探测**（参见 `漏洞复现合集/SQL注入.md`）：
+**SQL 注入探测**（参见 `../01-DVWA靶场实训/漏洞复现合集/SQL注入.md`）：
 
 ```
 GET /dvwa/vulnerabilities/sqli/?id=1'&Submit=Submit HTTP/1.1
@@ -121,15 +121,15 @@ Cookie: PHPSESSID=xxx; security=low
 
 ### 4.3 DVWA 暴力破解实战
 
-详见 `漏洞复现合集/暴力破解.md`，关键步骤：
+详见 `../01-DVWA靶场实训/漏洞复现合集/暴力破解.md`，关键步骤：
 
 ```
 1. 拦截登录请求 → Send to Intruder
 2. Positions 标签 → Clear § → 给 password 加 §
 3. Attack type → Sniper
 4. Payloads → Simple list → 导入密码字典
-6. Resource Pool → 配置并发数与节流
-7. Start attack → 观察 Length 列差异
+5. Resource Pool → 配置并发数与节流
+6. Start attack → 观察 Length 列差异
 ```
 
 ### 4.4 Community 版限制
@@ -240,18 +240,18 @@ Target → Site map
 ## 九、DVWA 实战中的 Burp Suite 使用总结
 
 ### 9.1 暴力破解模块
-详见 `漏洞复现合集/暴力破解.md`
+详见 `../01-DVWA靶场实训/漏洞复现合集/暴力破解.md`
 - Low：Intruder Sniper + 字典爆破
 - Medium：Intruder Sniper + 2000ms 节流
 - High：Repeater 手动重放（Community 无 Macros）
 
 ### 9.2 SQL 注入模块
-详见 `漏洞复现合集/SQL注入.md`
+详见 `../01-DVWA靶场实训/漏洞复现合集/SQL注入.md`
 - Repeater 修改 id 参数探测注入
 - 时间盲注通过响应延迟确认
 
 ### 9.3 文件上传模块
-详见 `漏洞复现合集/文件上传漏洞.md`
+详见 `../01-DVWA靶场实训/漏洞复现合集/文件上传漏洞.md`
 - Repeater 拦截上传请求
 - 修改 Content-Type 绕过 MIME 校验
 
@@ -261,17 +261,17 @@ Target → Site map
 
 #### 实操截图
 
-![Burp Suite Intruder 爆破配置与结果](screenshots/tools/tools-08.png)
+![Burp Suite Intruder 爆破配置与结果](../screenshots/tools/tools-08.png)
 
-![Burp Suite Repeater SQL 注入测试](screenshots/tools/tools-09.png)
+![Burp Suite Repeater SQL 注入测试](../screenshots/tools/tools-09.png)
 
-![Burp Suite HTTP History 请求记录](screenshots/tools/tools-10.png)
+![Burp Suite HTTP History 请求记录](../screenshots/tools/tools-10.png)
 
-![Burp Suite Intruder 攻击结果分析](screenshots/tools/tools-11.png)
+![Burp Suite Intruder 攻击结果分析](../screenshots/tools/tools-11.png)
 
-![Burp Suite 文件上传请求拦截修改](screenshots/tools/tools-12.png)
+![Burp Suite 文件上传请求拦截修改](../screenshots/tools/tools-12.png)
 
-![Burp Suite 响应对比分析](screenshots/tools/tools-13.png)
+![Burp Suite 响应对比分析](../screenshots/tools/tools-13.png)
 
 ---
 
@@ -318,5 +318,5 @@ Target → Site map
 
 - Burp Suite 官方文档：<https://portswigger.net/burp/documentation>
 - PortSwigger Web Security Academy：<https://portswigger.net/web-security>
-- DVWA 配合 Burp 实战教程：参见本仓库 `01-DVWA靶场实训/`
+- DVWA 配合 Burp 实战教程：参见本仓库 `../01-DVWA靶场实训/`
 - 仅在授权测试场景使用

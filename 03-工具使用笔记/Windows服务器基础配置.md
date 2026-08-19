@@ -505,7 +505,7 @@ Backup-BitLockerKeyProtector -MountPoint "C:" -KeyProtectorId $key
 
 ---
 
-## 十一、远程���理（PowerShell Remoting）
+## 十一、远程管理（PowerShell Remoting）
 
 ### 11.1 启用 WinRM
 
