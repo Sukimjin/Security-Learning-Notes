@@ -1,0 +1,55 @@
+version: '3.8'
+
+# ============================================================
+# Security-Learning-Notes 配套 DVWA 靶场一键启动配置
+# ============================================================
+# 使用方法：
+#   1. 安装 Docker Desktop（Windows/Mac）或 Docker Engine（Linux）
+#   2. 在本目录运行：docker-compose up -d
+#   3. 浏览器访问：http://localhost:8080
+#   4. 默认账号：admin / password
+#   5. 首次登录会跳转到 /setup.php，点击「Create / Reset Database」
+#   6. 登录后即可调整 Security Level 开始漏洞复现
+#
+# 停止靶场：
+#   docker-compose down
+# ============================================================
+
+services:
+  dvwa:
+    image: vulnerables/web-dvwa:latest
+    container_name: dvwa-lab
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      # DVWA 默认配置
+      - RECAPTCHA_PRIV_KEY=''
+      - RECAPTCHA_PUB_KEY=''
+      - SECURITY_LEVEL=low
+      - PHPIDS_ENABLED=0
+      # 默认管理员账号
+      - DEFAULT_ADMIN_USERNAME=admin
+      - DEFAULT_ADMIN_PASSWORD=password
+      - DEFAULT_SECURITY_LEVEL=low
+      - DEFAULT_PHPIDS_LEVEL=disabled
+    networks:
+      - dvwa-net
+    # 仅监听本机，避免暴露到公网
+    # 如需外部访问请删除此节，并注意防火墙配置
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+networks:
+  dvwa-net:
+    driver: bridge
+    name: dvwa-net
+
+# ============================================================
+# 注意事项
+# ============================================================
+# 注意 1. 此靶场包含故意设计的漏洞，**严禁部署在公网环境**
+# 注意 2. 仅用于本地安全学习与漏洞原理研究
+# 注意 3. 用完后请执行 docker-compose down 关闭容器
+# 注意 4. 不要修改默认弱密码 admin/password 用于生产环境
+# ============================================================
