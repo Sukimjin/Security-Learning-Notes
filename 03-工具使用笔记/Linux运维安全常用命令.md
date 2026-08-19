@@ -492,7 +492,7 @@ Port 2222                       # 修改默认端口
 PermitRootLogin no              # 禁止 root 登录
 PasswordAuthentication no       # 禁用密码认证
 PubkeyAuthentication yes        # 启用公钥认证
-AllowUsers your_admin           # 限制登录用户
+AllowUsers secadmin           # 限制登录用户
 MaxAuthTries 3                  # 最大尝试次数
 ClientAliveInterval 300         # 超时断开
 ClientAliveCountMax 2

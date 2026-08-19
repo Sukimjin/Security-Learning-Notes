@@ -246,7 +246,7 @@ nmap --scan-delay 1s 192.168.1.10
 
 ### 7.2 注意事项
 
-⚠️ **仅在授权测试场景使用规避技术**：
+注意 **仅在授权测试场景使用规避技术**：
 - 未授权使用规避技术可能违法
 - 多数企业 IDS 会记录规避行为
 
@@ -287,11 +287,11 @@ PORT     STATE SERVICE VERSION
 
 #### 实操截图
 
-![Nmap 端口扫描与服务识别结果](screenshots/tools/tools-01.png)
+![Nmap 端口扫描与服务识别结果](../screenshots/tools/tools-01.png)
 
-![Nmap 漏洞脚本扫描输出](screenshots/tools/tools-02.png)
+![Nmap 漏洞脚本扫描输出](../screenshots/tools/tools-02.png)
 
-![Nmap 综合扫描结果](screenshots/tools/tools-03.png)
+![Nmap 综合扫描结果](../screenshots/tools/tools-03.png)
 
 ---
 
