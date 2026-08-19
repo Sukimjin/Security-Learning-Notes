@@ -180,13 +180,13 @@ def generate_report(inspector, target, inspection_date, results):
 
             # 结果标记
             if result == "符合":
-                result_mark = "符合 ✅"
+                result_mark = "符合 ✓"
             elif result == "不符合":
-                result_mark = "不符合 ❌"
+                result_mark = "不符合 ✗"
             elif result == "不适用":
-                result_mark = "不适用 ➖"
+                result_mark = "不适用 -"
             else:
-                result_mark = result or "待检查 ⬜"
+                result_mark = result or "待检查 [ ]"
 
             lines.append(f"| {seq} | {check_item} | {method} | {result_mark} | {remark} |")
         lines.append("")
@@ -300,7 +300,9 @@ def csv_import(csv_path):
     with open(csv_path, "r", encoding="utf-8-sig") as f:
         reader = csv.DictReader(f)
         for row in reader:
-            results.append(row)
+            # 安全处理空字段，避免 None.strip() 崩溃
+            clean_row = {k: (v or "").strip() for k, v in row.items()}
+            results.append(clean_row)
     return results
 
 

@@ -6,21 +6,28 @@
 
 用途：解析 Apache / Nginx 访问日志，生成异常 IP、访问频次、状态码分布等统计信息。
 
-⚠️ 重要声明：
+注意 重要声明：
     本脚本为日志统计分析工具，**不包含任何攻击功能**。
     仅用于安全运维日志审计、巡检报告数据支撑。
     严禁用于未授权系统的攻击或数据窃取。
 
 支持的日志格式：
-    - Apache Combined Log Format
-    - Nginx 默认日志格式（与 Apache 类似）
+    - Apache Combined Log Format（含 Referer 和 User-Agent）
+    - Nginx 默认日志格式（与 Apache Combined 类似）
+
+格式限制：
+    - 仅支持 IPv4 地址（IPv6 日志行将被跳过）
+    - 仅支持 Combined 格式（Common 格式缺少 Referer/UA 字段，无法完整解析）
+    - 不支持 JSON 格式日志（如 Nginx 自定义 JSON 日志）
 
 使用方法：
     python3 日志简单解析.py <日志文件路径> [选项]
 
 示例：
     python3 日志简单解析.py /var/log/apache2/access.log
-    python3 日志简单解析.py access.log -t 50  # 展示前 50 条
+    python3 日志简单解析.py access.log -t 50          # 展示前 50 条
+    python3 日志简单解析.py access.log --top-n 50      # 同上（长参数）
+    python3 日志简单解析.py --help                      # 查看完整帮助
 
 作者：Security-Learning-Notes
 版本：V1.0
@@ -28,6 +35,7 @@
 
 import sys
 import re
+import argparse
 from collections import Counter, defaultdict
 from datetime import datetime
 
@@ -197,33 +205,39 @@ def analyze_records(records, top_n=20):
 
 def main():
     """
-    入口函数。
+    入口函数：解析命令行参数并执行日志分析。
     """
-    if len(sys.argv) < 2:
-        print('使用方法: python3 日志简单解析.py <日志文件路径> [-t TOP_N]')
-        print('示例: python3 日志简单解析.py /var/log/apache2/access.log -t 50')
-        sys.exit(1)
+    parser = argparse.ArgumentParser(
+        description="Apache/Nginx 访问日志解析工具（合规辅助脚本）",
+        epilog=(
+            "示例:\n"
+            "  python3 日志简单解析.py /var/log/apache2/access.log\n"
+            "  python3 日志简单解析.py access.log -t 50\n"
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument(
+        "logfile",
+        help="日志文件路径（Apache Combined / Nginx 默认格式）",
+    )
+    parser.add_argument(
+        "-t", "--top-n",
+        type=int,
+        default=20,
+        metavar="N",
+        help="每项统计展示前 N 条（默认: 20）",
+    )
 
-    filepath = sys.argv[1]
-    top_n = 20  # 默认展示前 20
+    args = parser.parse_args()
 
-    # 解析 -t 参数
-    if '-t' in sys.argv:
-        try:
-            idx = sys.argv.index('-t')
-            top_n = int(sys.argv[idx + 1])
-        except (IndexError, ValueError):
-            print('[ERROR] -t 参数错误，应为整数')
-            sys.exit(1)
-
-    print(f'开始解析日志: {filepath}')
-    records = parse_log_file(filepath)
+    print(f"开始解析日志: {args.logfile}")
+    records = parse_log_file(args.logfile)
 
     if not records:
-        print('[WARN] 无有效记录，退出')
+        print("[WARN] 无有效记录，退出")
         sys.exit(0)
 
-    analyze_records(records, top_n)
+    analyze_records(records, args.top_n)
 
 
 if __name__ == '__main__':
